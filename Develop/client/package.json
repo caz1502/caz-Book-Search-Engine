@@ -13,7 +13,13 @@
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "apollo-server-express": "^2.15.0",
+    "bcrypt": "^4.0.1",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.10"
   },
   "scripts": {
     "start": "react-scripts start",
