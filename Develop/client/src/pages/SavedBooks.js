@@ -7,23 +7,20 @@ import {
   Card,
   Button,
 } from "react-bootstrap";
-
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
-//import { ADD_BOOK } from '../utils/mutations'
-import { QUERY_ME } from "../utils/queries";
-import { DELETE_BOOK } from "../utils/mutations";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+
+import { GET_ME } from "../utils/queries";
+
+import { REMOVE_BOOK } from "../utils/mutations";
 
 const SavedBooks = () => {
-  //const [userData, setUserData] = useState({});
-
-  const { loading, data } = useQuery(QUERY_ME);
+  const { loading, data } = useQuery(GET_ME);
   const userData = data?.me || [];
-  const [removeBook] = useMutation(DELETE_BOOK);
 
+  const [removeBook] = useMutation(REMOVE_BOOK);
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -32,18 +29,16 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await removeBook({
+      const response = await removeBook({
         variables: { bookId: bookId },
       });
-      // upon success, remove book's id from localStorage
+
       removeBookId(bookId);
-      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
-  // if data isn't here yet, say so
   if (loading) {
     return <h2>LOADING...</h2>;
   }
